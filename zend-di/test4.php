@@ -21,14 +21,14 @@ function __autoload($className)
 $di = new Zend\Di\Di;
 
 //trigger autoloader
-$a = $di->newinstance('A');
+$a = $di->get('A');
 unset ($a);
 
 
 $t1 = microtime(true);
 
 for ($i = 0; $i < 10000; $i++) {
-	$a = $di->newinstance('A');
+	$a = $di->get('A');
 	
 }
 
