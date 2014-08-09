@@ -13,7 +13,7 @@ $container = $configurator->createContainer(); // compile
 $t1 = microtime(true);
 
 for ($i = 0; $i < 10000; $i++) {
-	$a = $container->getService('a');
+	$a = $container->createServiceA();
 }
 
 $t2 = microtime(true);

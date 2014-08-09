@@ -17,13 +17,13 @@ class MyContainer extends Nette\DI\Container
 $container = new MyContainer();
 
 //Trigger the autoloader
-$a = $container->getService('a');
+$a = $container->createServiceA();
 unset($a);
 
 $t1 = microtime(true);
 
 for ($i = 0; $i < 10000; $i++) {
-	$a = $container->getService('a');
+	$a = $container->createServiceA();
 }
 
 $t2 = microtime(true);
