@@ -18,6 +18,20 @@ function __autoload($className)
 
 $container = new \Njasm\Container\Container();
 
+
+$container->set('A', new A());
+$container->set('B', new B($container->get('A')));
+$container->set('C', new C($container->get('B')));
+$container->set('D', new D($container->get('C')));
+$container->set('E', new E($container->get('D')));
+$container->set('F', new F($container->get('E')));
+$container->set('G', new G($container->get('F')));
+$container->set('H', new H($container->get('G')));
+$container->set('I', new I($container->get('H')));
+$container->set('J', function() use (&$container) {
+    return new J($container->get('I'));
+});
+
 //trigger autoloader
 $a = $container->get('J');
 unset ($a);

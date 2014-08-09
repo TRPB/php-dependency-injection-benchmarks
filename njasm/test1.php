@@ -19,6 +19,11 @@ function __autoload($className)
 
 $container = new \Njasm\Container\Container();
 
+// register a factory to instantiate the object everytime
+$container->set('A', function() {
+    return new A();
+});
+
 $t1 = microtime(true);
 
 for ($i = 0; $i < 10000; $i++) {

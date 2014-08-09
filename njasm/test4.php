@@ -19,7 +19,7 @@ function __autoload($className)
 
 $container = new \Njasm\Container\Container();
 $a1 = new A;
-$container->set('A', $a1);
+$container->singleton('A', $a1);
 
 
 //trigger autoloader

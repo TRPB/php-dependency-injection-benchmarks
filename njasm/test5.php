@@ -18,6 +18,11 @@ function __autoload($className)
 
 $container = new \Njasm\Container\Container();
 
+$container->singleton('A', new A());
+$container->set('B', function() use(&$container) {
+    return new B($container->get('A'));
+});
+
 //trigger autoloader
 $a = $container->get('B');
 unset ($a);

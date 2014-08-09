@@ -19,6 +19,11 @@ function __autoload($className)
 
 $container = new \Njasm\Container\Container();
 
+// register a factory to instantiate the object everytime
+$container->set('A', function() {
+    return new A();
+});
+
 //trigger autoloader 
 $a = $container->get('A');
 unset ($a);
