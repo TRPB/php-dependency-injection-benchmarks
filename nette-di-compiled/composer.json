@@ -1,6 +1,0 @@
-{
-	"require": {
-		"nette/di": "2.2",
-		"nette/bootstrap": "2.2"
-	}
-}
