@@ -1,0 +1,11 @@
+services:
+	a: A
+	b: B
+	- C
+	- D
+	- E
+	- F
+	- G
+	- H
+	- I
+	j: J
