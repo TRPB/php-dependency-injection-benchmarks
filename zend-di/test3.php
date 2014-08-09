@@ -17,8 +17,8 @@ function __autoload($className)
 }
 
 
-$di = new Zend\Di\Di;
 
+$di = new Zend\Di\Di;
 //trigger autoloader
 $a = $di->newinstance('J');
 unset ($a);
@@ -27,6 +27,9 @@ unset ($a);
 $t1 = microtime(true);
 
 for ($i = 0; $i < 10000; $i++) {
+	//This is required otherwise ->newinstance() only creates a new instance of the top level of the code
+	//If there's a better way to configure this let me know
+	$di = new Zend\Di\Di;
 	$a = $di->newinstance('J');
 }
 
