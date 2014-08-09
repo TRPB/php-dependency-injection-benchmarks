@@ -19,15 +19,44 @@ function __autoload($className)
 $container = new \Njasm\Container\Container();
 
 
-$container->set('A', new A());
-$container->set('B', new B($container->get('A')));
-$container->set('C', new C($container->get('B')));
-$container->set('D', new D($container->get('C')));
-$container->set('E', new E($container->get('D')));
-$container->set('F', new F($container->get('E')));
-$container->set('G', new G($container->get('F')));
-$container->set('H', new H($container->get('G')));
-$container->set('I', new I($container->get('H')));
+// register everything as factories, so all objects are instantiated
+// on every request.
+$container->set('A', function() {
+    return new A();
+});
+
+$container->set('B', function() use (&$container) {
+    return new B($container->get('A'));
+});
+
+$container->set('C', function() use (&$container) {
+    return new C($container->get('B'));
+});
+
+$container->set('D', function() use (&$container) {
+    return new D($container->get('C'));
+});
+
+$container->set('E', function() use (&$container) {
+    return new E($container->get('D'));
+});
+
+$container->set('F', function() use (&$container) {
+    return new F($container->get('E'));
+});
+
+$container->set('G', function() use (&$container) {
+    return new G($container->get('F'));
+});
+
+$container->set('H', function() use (&$container) {
+    return new H($container->get('G'));
+});
+
+$container->set('I', function() use (&$container) {
+    return new I($container->get('H'));
+});
+
 $container->set('J', function() use (&$container) {
     return new J($container->get('I'));
 });
