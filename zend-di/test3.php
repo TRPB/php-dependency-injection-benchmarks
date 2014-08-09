@@ -27,8 +27,7 @@ unset ($a);
 $t1 = microtime(true);
 
 for ($i = 0; $i < 10000; $i++) {
-	$di = new Zend\Di\Di;
-	$a = $di->get('J');
+	$a = $di->newinstance('J');
 }
 
 $t2 = microtime(true);
