@@ -32,6 +32,14 @@ for ($i = 0; $i < count($classes); $i++) {
 }
 
 
+$dumper = new Symfony\Component\DependencyInjection\Dumper\PhpDumper($container);
+
+$class = 'BenchmarkContainer';
+$rawContainer = $dumper->dump(['class' => $class, 'base_class' => 'Container']);
+eval('?>' . $rawContainer);
+
+$container = new $class();
+
 //Trigger autoloader
 $a = $container->get('J');
 unset($a);

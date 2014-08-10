@@ -27,6 +27,14 @@ $definition = new Symfony\Component\DependencyInjection\Definition('B', $ref );
 $definition->setScope('prototype');
 $container->setDefinition('B', $definition);
 
+$dumper = new Symfony\Component\DependencyInjection\Dumper\PhpDumper($container);
+
+$class = 'BenchmarkContainer';
+$rawContainer = $dumper->dump(['class' => $class, 'base_class' => 'Container']);
+eval('?>' . $rawContainer);
+
+$container = new $class();
+
 //trigger autoloader
 $a = $container->get('B');
 unset($a);
