@@ -20,6 +20,7 @@ require_once 'DI/functions.php';
 
 $builder = new \DI\ContainerBuilder();
 $builder->addDefinitions('config-test3.php');
+$builder->setDefinitionCache(new \Doctrine\Common\Cache\ArrayCache());
 
 $container = $builder->build();
 

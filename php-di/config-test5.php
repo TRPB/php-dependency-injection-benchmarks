@@ -1,8 +1,8 @@
-<?php 
+<?php
 
 return [
 
-'B' => \DI\object()
-->scope(\DI\Scope::PROTOTYPE())
+    'B' => \DI\object()
+        ->scope(\DI\Scope::PROTOTYPE())
 
 ];
