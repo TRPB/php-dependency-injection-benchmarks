@@ -25,19 +25,22 @@ $builder->setDefinitionCache(new \Doctrine\Common\Cache\ArrayCache());
 $container = $builder->build();
 
 //trigger autoloader
-$a = $container->get('J');
-unset ($a);
+$j = $container->get('J');
+unset ($j);
 
 $t1 = microtime(true);
 
 for ($i = 0; $i < 10000; $i++) {
-	$a = $container->get('J');
+	$j = $container->get('J');
 	
 }
 
 $t2 = microtime(true);
 
-echo '<br />' . ($t2 - $t1);
+$results = [
+	'time' => $t2 - $t1,
+	'files' => count(get_included_files()),
+	'memory' => memory_get_peak_usage()/1024/1024
+];
 
-echo '<br /># Files: ' . count(get_included_files());
-echo '<br />Memory usage:' . (memory_get_peak_usage()/1024/1024) . 'mb';
+echo json_encode($results);

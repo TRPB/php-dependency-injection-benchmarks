@@ -16,21 +16,31 @@ function __autoload($className)
 	require $fileName;
 }
 
+$file = './container_test6.php';
 
-$container = new Symfony\Component\DependencyInjection\ContainerBuilder;
+if (file_exists($file)) {
+	require_once $file;
+	$container = new ProjectServiceContainer();
+} else {
+	$container = new Symfony\Component\DependencyInjection\ContainerBuilder;
 
-$classes = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-for ($i = 0; $i < count($classes); $i++) {
-	if (isset($classes[$i-1])) {
-		$ref = [new Symfony\Component\DependencyInjection\Reference($classes[$i-1])];
+	$classes = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+	for ($i = 0; $i < count($classes); $i++) {
+		if (isset($classes[$i-1])) {
+			$ref = [new Symfony\Component\DependencyInjection\Reference($classes[$i-1])];
+		}
+		else $ref = [];
+
+		$definition = new Symfony\Component\DependencyInjection\Definition($classes[$i], $ref );
+		$definition->setScope('prototype');
+		$container->setDefinition($classes[$i], $definition);
 	}
-	else $ref = [];
-	
-	$definition = new Symfony\Component\DependencyInjection\Definition($classes[$i], $ref );
-	$definition->setScope('prototype');
-	$container->setDefinition($classes[$i], $definition);
-}
 
+	$container->compile();
+
+	$dumper = new Symfony\Component\DependencyInjection\Dumper\PhpDumper($container);
+	file_put_contents($file, $dumper->dump());
+}
 
 //Trigger autoloader
 $a = $container->get('J');
@@ -44,7 +54,10 @@ for ($i = 0; $i < 10000; $i++) {
 
 $t2 = microtime(true);
 
-echo '<br />' . ($t2 - $t1);
+$results = [
+	'time' => $t2 - $t1,
+	'files' => count(get_included_files()),
+	'memory' => memory_get_peak_usage()/1024/1024
+];
 
-echo '<br /># Files: ' . count(get_included_files());
-echo '<br />Memory usage:' . (memory_get_peak_usage()/1024/1024) . 'mb';
+echo json_encode($results);

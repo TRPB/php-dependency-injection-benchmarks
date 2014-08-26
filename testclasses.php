@@ -81,3 +81,11 @@ class J {
 		$this->i = $i;
 	}
 }
+
+class K {
+	public $j;
+	
+	public function __construct(K $k) {
+		$this->k = $k;
+	}
+}

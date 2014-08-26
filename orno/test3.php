@@ -1,6 +1,6 @@
 <?php 
 require_once '../testclasses.php';
-
+opcache_reset();
 function __autoload($className)
 {
 	$className = ltrim($className, '\\');
@@ -17,6 +17,17 @@ function __autoload($className)
 }
 
 
+
+$container = new \Orno\Di\Container;
+$a1 = new A;
+$container->add('A', $a1);
+
+$b = $container->get('B'); 
+$b1 = $container->get('B'); 
+
+var_dump($b->a === $b1->a);
+die;
+
 //Trigger all autoloaders
 $container = new \Orno\Di\Container();
 $a = $container->get('J');
@@ -27,12 +38,15 @@ unset($a);
 $t1 = microtime(true);
 
 for ($i = 0; $i < 10000; $i++) {
-	$a = $container->get('J');
+//	$a = $container->get('J');
 }
 
 $t2 = microtime(true);
 
-echo $t2 - $t1;
+$results = [
+'time' => $t2 - $t1,
+'files' => count(get_included_files()),
+'memory' => memory_get_peak_usage()/1024/1024
+];
 
-echo '<br /># Files: ' . count(get_included_files());
-echo '<br />Memory usage:' . (memory_get_peak_usage()/1024/1024) . 'mb';
+echo json_encode($results);

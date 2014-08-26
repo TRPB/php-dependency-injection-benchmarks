@@ -17,11 +17,30 @@ function __autoload($className)
 }
 
 
-$container = new Symfony\Component\DependencyInjection\ContainerBuilder;
 
-$definition = new Symfony\Component\DependencyInjection\Definition('A', []);
-$definition->setScope('prototype');
-$container->setDefinition('A', $definition);
+
+
+$file = './container_test1.php';
+
+if (file_exists($file)) {
+	require_once $file;
+	$container = new ProjectServiceContainer();
+} else {
+	
+	$container = new Symfony\Component\DependencyInjection\ContainerBuilder;
+
+
+	$definition = new Symfony\Component\DependencyInjection\Definition('A', []);
+	$definition->setScope('prototype');
+	$container->setDefinition('A', $definition);
+	$container->compile();
+
+	$dumper = new Symfony\Component\DependencyInjection\Dumper\PhpDumper($container);
+	file_put_contents($file, $dumper->dump());
+}
+
+
+
 
 //Trigger the autoloader
 $a = $container->get('A');
@@ -35,7 +54,10 @@ for ($i = 0; $i < 10000; $i++) {
 
 $t2 = microtime(true);
 
-echo '<br />' . ($t2 - $t1);
+$results = [
+	'time' => $t2 - $t1,
+	'files' => count(get_included_files()),
+	'memory' => memory_get_peak_usage()/1024/1024
+];
 
-echo '<br /># Files: ' . count(get_included_files());
-echo '<br />Memory usage:' . (memory_get_peak_usage()/1024/1024) . 'mb';
+echo json_encode($results);
