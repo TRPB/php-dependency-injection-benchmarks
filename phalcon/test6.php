@@ -1,35 +1,64 @@
-<?php
+<?php 
+require_once '../testclasses.php';
 
-//Work out overhead of launching 1000 PHP scripts via exec()
+$di = new Phalcon\DI();
 
-$t1 = microtime(true);
+$di->set('A', function() {
+	return new A();
+});
 
-for ($i = 0; $i < 1000; $i++) {
-	exec('php ../blank.php', $output, $exitCode);
-}
+$di->set('B', function() use ($di) {
+	return new B($di->get('A'));
+});	
+	
 
-$t2 = microtime(true);
+$di->set('C', function() use ($di) {
+	return new C($di->get('B'));
+});
+	
 
-$overhead = $t2 - $t1;
+$di->set('D', function() use ($di) {
+	return new D($di->get('C'));
+});
+		
+		
+
+$di->set('E', function() use ($di) {
+	return new E($di->get('D'));
+});
+			
+
+$di->set('F', function() use ($di) {
+	return new F($di->get('E'));
+});
+				
+
+$di->set('G', function() use ($di) {
+	return new G($di->get('F'));
+});
+					
+
+$di->set('H', function() use ($di) {
+	return new H($di->get('G'));
+});
+						
+						
+
+$di->set('I', function() use ($di) {
+	return new I($di->get('H'));
+});
 
 
-echo 'Overhead time: ' . $overhead . '<br />';
+$di->set('J', function() use ($di) {
+	return new J($di->get('I'));
+});
 
-$ini = getcwd() . DIRECTORY_SEPARATOR . 'php-phalcon.ini';
+$j = $di->get('J');
 
-$t1 = microtime(true);
+$results = [
+'time' => 0,
+'files' => count(get_included_files()),
+'memory' => memory_get_peak_usage()/1024/1024
+];
 
-for ($i = 0; $i < 1000; $i++) {
-	exec('php -c ' . $ini. ' test6a.php', $output, $exitCode);
-}
-
-
-$t2 = microtime(true);
-
-$test  = $t2 - $t1;
-echo 'Test time: ' . $test . '<br />';
-
-echo 'Benchmark time (after removing the overhead): ' . ($test - $overhead);
-
-echo '<br /># Files: ' . count(get_included_files());
-echo '<br />Memory usage:' . (memory_get_peak_usage()/1024/1024) . 'mb';
+echo json_encode($results);

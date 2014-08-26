@@ -1,31 +1,25 @@
 <?php
 
-//Work out overhead of launching 1000 PHP scripts via exec()
+require_once __DIR__ . '/vendor/autoload.php';
+require_once '../testclasses.php';
 
-$t1 = microtime(true);
 
-for ($i = 0; $i < 1000; $i++) {
-	exec('php ../blank.php', $output, $exitCode);
+
+$configurator = new \Nette\Configurator();
+$configurator->setTempDirectory(__DIR__ . '/temp');
+$configurator->defaultExtensions = array();
+$configurator->addConfig(__DIR__ . '/config/services.neon');
+$container = $configurator->createContainer(); // compile
+	
+
+for ($i = 0; $i < $argv[1]; $i++) {
+	$j = $container->createServiceJ();
 }
 
-$t2 = microtime(true);
+$results = [
+'time' => 0,
+'files' => count(get_included_files()),
+'memory' => memory_get_peak_usage()/1024/1024
+];
 
-$overhead = $t2 - $t1;
-echo 'Overhead time: ' . $overhead . '<br />';
-
-$t1 = microtime(true);
-
-for ($i = 0; $i < 1000; $i++) {
-	exec('php test6a.php', $output, $exitCode);
-}
-
-
-$t2 = microtime(true);
-
-$test  = $t2 - $t1;
-echo 'Test time: ' . $test . '<br />';
-
-echo 'Benchmark time (after removing the overhead): ' . ($test - $overhead);
-
-echo '<br /># Files: ' . count(get_included_files());
-echo '<br />Memory usage:' . (memory_get_peak_usage()/1024/1024) . 'mb';
+echo json_encode($results);

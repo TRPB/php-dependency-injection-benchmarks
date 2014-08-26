@@ -1,31 +1,62 @@
-<?php
+<?php 
+require_once '../testclasses.php';
 
-//Work out overhead of launching 1000 PHP scripts via exec()
+function __autoload($className)
+{
+	$className = ltrim($className, '\\');
+	$fileName  = '';
+	$namespace = '';
+	if ($lastNsPos = strrpos($className, '\\')) {
+		$namespace = substr($className, 0, $lastNsPos);
+		$className = substr($className, $lastNsPos + 1);
+		$fileName  = str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
+	}
+	$fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
 
-$t1 = microtime(true);
-
-for ($i = 0; $i < 1000; $i++) {
-	exec('php ../blank.php', $output, $exitCode);
-}
-
-$t2 = microtime(true);
-
-$overhead = $t2 - $t1;
-echo 'Overhead time: ' . $overhead . '<br />';
-
-$t1 = microtime(true);
-
-for ($i = 0; $i < 1000; $i++) {
-	exec('php test6a.php', $output, $exitCode);
+	require $fileName;
 }
 
 
-$t2 = microtime(true);
 
-$test  = $t2 - $t1;
-echo 'Test time: ' . $test . '<br />';
 
-echo 'Benchmark time (after removing the overhead): ' . ($test - $overhead);
+$file = './container_test6.php';
 
-echo '<br /># Files: ' . count(get_included_files());
-echo '<br />Memory usage:' . (memory_get_peak_usage()/1024/1024) . 'mb';
+if (file_exists($file)) {
+	require_once $file;
+	$container = new ProjectServiceContainer();
+} else {
+$container = new Symfony\Component\DependencyInjection\ContainerBuilder;
+
+	$classes = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+	for ($i = 0; $i < count($classes); $i++) {
+		if (isset($classes[$i-1])) {
+			$ref = [new Symfony\Component\DependencyInjection\Reference($classes[$i-1])];
+		}
+		else $ref = [];
+		
+		$definition = new Symfony\Component\DependencyInjection\Definition($classes[$i], $ref );
+		$definition->setScope('prototype');
+		$container->setDefinition($classes[$i], $definition);
+	}
+
+	
+	$container->compile();
+
+	$dumper = new Symfony\Component\DependencyInjection\Dumper\PhpDumper($container);
+	file_put_contents($file, $dumper->dump());
+}
+
+for ($i = 0; $i < $argv[1]; $i++) {
+	$j = $container->get('J');
+}
+
+
+
+
+$results = [
+'time' => 0,
+'files' => count(get_included_files()),
+'memory' => memory_get_peak_usage()/1024/1024
+];
+
+echo json_encode($results);

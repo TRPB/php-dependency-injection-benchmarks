@@ -95,7 +95,7 @@ foreach ($containers as $container) {
 	for ($i = 0; $i < $runs; $i++) {
 		$t1 = microtime(true);
 		for ($i = 0; $i < $iterations; $i++) {
-			$output = runScript('./test6a.php', $inis[$container], [$objects]);			
+			$output = runScript('./test6.php', $inis[$container], [$objects]);			
 		}
 		$t2 = microtime(true);
 		

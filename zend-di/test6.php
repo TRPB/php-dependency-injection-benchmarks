@@ -1,31 +1,37 @@
-<?php
+<?php 
+require_once '../testclasses.php';
 
-//Work out overhead of launching 1000 PHP scripts via exec()
+function __autoload($className)
+{
+	$className = ltrim($className, '\\');
+	$fileName  = '';
+	$namespace = '';
+	if ($lastNsPos = strrpos($className, '\\')) {
+		$namespace = substr($className, 0, $lastNsPos);
+		$className = substr($className, $lastNsPos + 1);
+		$fileName  = str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
+	}
+	$fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
 
-$t1 = microtime(true);
-
-for ($i = 0; $i < 1000; $i++) {
-	exec('php ../blank.php', $output, $exitCode);
-}
-
-$t2 = microtime(true);
-
-$overhead = $t2 - $t1;
-echo 'Overhead time: ' . $overhead . '<br />';
-
-$t1 = microtime(true);
-
-for ($i = 0; $i < 1000; $i++) {
-	exec('php test6a.php', $output, $exitCode);
+	require $fileName;
 }
 
 
-$t2 = microtime(true);
 
-$test  = $t2 - $t1;
-echo 'Test time: ' . $test . '<br />';
+$di = new Zend\Di\Di;
 
-echo 'Benchmark time (after removing the overhead): ' . ($test - $overhead);
+for ($i = 0; $i < $argv[1]; $i++) {
+	//This is required otherwise ->newinstance() only creates a new instance of the top level of the code
+	//If there's a better way to configure this let me know
+	$di = new Zend\Di\Di;
+	$a = $di->newinstance('J');
+}
 
-echo '<br /># Files: ' . count(get_included_files());
-echo '<br />Memory usage:' . (memory_get_peak_usage()/1024/1024) . 'mb';
+
+$results = [
+'time' => 0,
+'files' => count(get_included_files()),
+'memory' => memory_get_peak_usage()/1024/1024
+];
+
+echo json_encode($results);
