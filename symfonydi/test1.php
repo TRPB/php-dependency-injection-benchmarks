@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once '../testclasses.php';
 
 function __autoload($className)
@@ -23,6 +23,14 @@ $container = new Symfony\Component\DependencyInjection\ContainerBuilder;
 $definition = new Symfony\Component\DependencyInjection\Definition('A', []);
 $definition->setScope('prototype');
 $container->setDefinition('A', $definition);
+
+$dumper = new Symfony\Component\DependencyInjection\Dumper\PhpDumper($container);
+
+$class = 'BenchmarkContainer';
+$rawContainer = $dumper->dump(['class' => $class, 'base_class' => 'Container']);
+eval('?>' . $rawContainer);
+
+$container = new $class();
 
 
 $t1 = microtime(true);

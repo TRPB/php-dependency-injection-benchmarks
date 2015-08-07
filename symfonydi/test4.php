@@ -21,6 +21,14 @@ function __autoload($className)
 $container = new Symfony\Component\DependencyInjection\ContainerBuilder;
 $container->register('A', 'A');
 
+$dumper = new Symfony\Component\DependencyInjection\Dumper\PhpDumper($container);
+
+$class = 'BenchmarkContainer';
+$rawContainer = $dumper->dump(['class' => $class, 'base_class' => 'Container']);
+eval('?>' . $rawContainer);
+
+$container = new $class();
+
 //Trigger autoloader
 $a = $container->get('A');
 unset($a);
