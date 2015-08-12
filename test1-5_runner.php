@@ -70,8 +70,8 @@ $html .= '<style>td,th {padding: 5px; border: 1px solid #aaa; text-align: right;
 $testdescriptions = [1 => 'Create single object (incl autoload time)',
 					 2 => 'Create single object (excl autoload time)',
 					 3 => 'Create deep object graph',
-					 4 => 'Fetch the same instance from the container repeatedly',
-					 5 => 'Inject a shared instance into a new object repeatedly'
+					 4 => 'Fetch the same instance (service) from the container repeatedly',
+					 5 => 'Inject a service into a new object repeatedly'
 	];
 
 for ($test = 1; $test <= $numTests; $test++) {
