@@ -1,52 +1,119 @@
 <?php 
-require_once '../testclasses.php';
 
-function __autoload($className)
-{
-	$className = ltrim($className, '\\');
-	$fileName  = '';
-	$namespace = '';
-	if ($lastNsPos = strrpos($className, '\\')) {
-		$namespace = substr($className, 0, $lastNsPos);
-		$className = substr($className, $lastNsPos + 1);
-		$fileName  = str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
-	}
-	$fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
-
-	require $fileName;
-}
+$container = new \Pimple\Container();
 
 
-$container = new Pimple\Container;
+$container['a'] = $container->factory(function ($container) {
+	return new A();
+});
 
-$classes = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-for ($i = 0; $i < count($classes); $i++) {
-	if (isset($classes[$i-1])) {
-		$ref = $classes[$i-1];
-	}
-	else $ref = null;
 
-    $class = $classes[$i];
+$container['b'] = $container->factory(function ($container) {
+	return new B($container['a']);
+});
 	
-    $container[$class] = $container->factory(function ($app) use ($ref, $class) {
-        return new $class($app[$ref]);
-    });
-}
+	
+$container['c'] = $container->factory(function ($container) {
+	return new C($container['b']);
+});
 
 
-//Trigger autoloader
-$a = $container['J'];
-unset($a);
+$container['d'] = $container->factory(function ($container) {
+	return new D($container['c']);
+});
+	
 
+$container['e'] = $container->factory(function ($container) {
+	return new E($container['d']);
+});
+
+$container['f'] = $container->factory(function ($container) {
+	return new F($container['e']);
+});
+
+$container['g'] = $container->factory(function ($container) {
+	return new G($container['f']);
+});
+		
+$container['h'] = $container->factory(function ($container) {
+	return new H($container['g']);
+});
+			
+$container['i'] = $container->factory(function ($container) {
+	return new I($container['h']);
+});
+				
+$container['j'] = $container->factory(function ($container) {
+	return new J($container['i']);
+});
+
+
+
+//trigger autoloader
+$j = $container['j'];
+unset($j);
+	
+	
 $t1 = microtime(true);
 
 for ($i = 0; $i < 10000; $i++) {
-	$a = $container['J'];
+	$container = new \Pimple\Container();
+
+
+$container['a'] = $container->factory(function ($container) {
+	return new A();
+});
+
+
+$container['b'] = $container->factory(function ($container) {
+	return new B($container['a']);
+});
+	
+	
+$container['c'] = $container->factory(function ($container) {
+	return new C($container['b']);
+});
+
+
+$container['d'] = $container->factory(function ($container) {
+	return new D($container['c']);
+});
+	
+
+$container['e'] = $container->factory(function ($container) {
+	return new E($container['d']);
+});
+
+$container['f'] = $container->factory(function ($container) {
+	return new F($container['e']);
+});
+
+$container['g'] = $container->factory(function ($container) {
+	return new G($container['f']);
+});
+		
+$container['h'] = $container->factory(function ($container) {
+	return new H($container['g']);
+});
+			
+$container['i'] = $container->factory(function ($container) {
+	return new I($container['h']);
+});
+				
+$container['j'] = $container->factory(function ($container) {
+	return new J($container['i']);
+});
+
+	$j = $container['j'];
+	
 }
 
 $t2 = microtime(true);
 
-echo '<br />' . ($t2 - $t1);
+$results = [
+	'time' => $t2 - $t1,
+	'files' => count(get_included_files()),
+	'memory' => memory_get_peak_usage()/1024/1024
+];
 
-echo '<br /># Files: ' . count(get_included_files());
-echo '<br />Memory usage:' . (memory_get_peak_usage()/1024/1024) . 'mb';
+echo json_encode($results);

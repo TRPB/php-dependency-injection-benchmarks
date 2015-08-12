@@ -1,31 +1,28 @@
 <?php 
-require_once '../testclasses.php';
+$file = __DIR__ . '/container_test5.php';
+
+if (file_exists($file)) {
+	require_once $file;
+	$container = new ProjectServiceContainer();
+} else {
+	
+	$container = new Symfony\Component\DependencyInjection\ContainerBuilder;
 
 
-function __autoload($className)
-{
-	$className = ltrim($className, '\\');
-	$fileName  = '';
-	$namespace = '';
-	if ($lastNsPos = strrpos($className, '\\')) {
-		$namespace = substr($className, 0, $lastNsPos);
-		$className = substr($className, $lastNsPos + 1);
-		$fileName  = str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
-	}
-	$fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
+	$container->register('A', 'A');
+	$ref = [new Symfony\Component\DependencyInjection\Reference('A')];
+	$definition = new Symfony\Component\DependencyInjection\Definition('B', $ref );
+	$definition->setScope('prototype');
+	$container->setDefinition('B', $definition);
 
-	require $fileName;
+
+	$container->compile();
+
+	$dumper = new Symfony\Component\DependencyInjection\Dumper\PhpDumper($container);
+	file_put_contents($file, $dumper->dump());
 }
 
 
-$container = new Symfony\Component\DependencyInjection\ContainerBuilder;
-
-
-$container->register('A', 'A');
-$ref = [new Symfony\Component\DependencyInjection\Reference('A')];
-$definition = new Symfony\Component\DependencyInjection\Definition('B', $ref );
-$definition->setScope('prototype');
-$container->setDefinition('B', $definition);
 
 //trigger autoloader
 $a = $container->get('B');
@@ -39,7 +36,10 @@ for ($i = 0; $i < 10000; $i++) {
 
 $t2 = microtime(true);
 
-echo '<br />' . ($t2 - $t1);
+$results = [
+	'time' => $t2 - $t1,
+	'files' => count(get_included_files()),
+	'memory' => memory_get_peak_usage()/1024/1024
+];
 
-echo '<br /># Files: ' . count(get_included_files());
-echo '<br />Memory usage:' . (memory_get_peak_usage()/1024/1024) . 'mb';
+echo json_encode($results);

@@ -1,0 +1,31 @@
+{
+    "name": "tombzombie/php-dependency-injection-benchmarks",
+    "description": "Benchmarks of PHP DI Contaners",
+    "license": "BSD-2-Clause",
+    "homepage": "https://github.com/TomBZombie/php-dependency-injection-benchmarks",
+    "keywords": ["Dependency injection container benchmarks", "ioc benchmarks", "Dependency injection container performance", "DI"],
+    "authors": [
+    	{
+    		"name": "Tom Butler",
+    		"email": "tom@r.je"
+    	}
+    ],
+    "require": {
+        "php": ">=5.6.0",
+        "TomBZombie/Dice": "*",
+        "rdlowrey/auryn": "*",
+        "pimple/pimple": "*",
+        "aura/di": "*",
+        "illuminate/container": "*",
+        "nette/di": "*",
+        "njasm/container": "*",
+        "league/container": "*",
+        "php-di/php-di": "*",
+        "doctrine/cache": "*",
+        "symfony/dependency-injection": "*",
+        "symfony/config": "*",
+        "symfony/proxy-manager-bridge": "*",
+        "zendframework/zend-di": "*",
+        "zendframework/zend-servicemanager": "*"
+    }
+}

@@ -1,12 +1,5 @@
 <?php 
 
-error_reporting(E_ALL);
-ini_set('display_errors', 'on');
-
-require_once '../testclasses.php';
-require_once 'autoload.php';
-
-
 
 use Aura\Di\Container;
 use Aura\Di\Factory;
@@ -25,7 +18,10 @@ for ($i = 0; $i < 10000; $i++) {
 
 $t2 = microtime(true);
 
-echo '<br />' . ($t2 - $t1);
+$results = [
+	'time' => $t2 - $t1,
+	'files' => count(get_included_files()),
+	'memory' => memory_get_peak_usage()/1024/1024
+];
 
-echo '<br /># Files: ' . count(get_included_files());
-echo '<br />Memory usage:' . (memory_get_peak_usage()/1024/1024) . 'mb';
+echo json_encode($results);

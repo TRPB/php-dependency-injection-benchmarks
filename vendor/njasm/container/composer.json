@@ -1,0 +1,48 @@
+{
+    "name": "njasm/container",
+    "description": "Dependency Container for PHP",
+    "homepage": "http://github.com/njasm/container",
+    "license": "MIT",
+    "keywords": ["DiC", "IoC", "Dependency Injection", "Dependency-Container"],
+    "authors": [
+        {
+            "name": "Nelson João Morais",
+            "email": "njmorais@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/njasm/container/issues",
+        "source": "https://github.com/njasm/container"
+    },
+    "minimum-stability": "dev",
+    "require-dev": {
+        "phpunit/phpunit": "4.4.*@dev",
+        "satooshi/php-coveralls": "dev-master",
+        "mnapoli/php-di": "~4.0",
+        "aura/di": "~1.0",
+        "pimple/pimple": "~3.0",
+        "zendframework/zend-di": "~2.0",
+        "symfony/dependency-injection": "~2.5",
+        "illuminate/container": "~4.2",
+        "nette/di": "~2.2",
+        "ray/di": "~1.4",
+        "orno/di": "~2.0",
+        "joomla/di": "~1.2"
+    },
+    "require": {
+        "php": ">=5.3",
+        "container-interop/container-interop": "~1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Njasm\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Njasm\\Container\\Tests\\": "tests/",
+            "Njasm\\Container\\Examples\\": "example/"
+        }
+    }
+}

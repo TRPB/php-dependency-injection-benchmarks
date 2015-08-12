@@ -1,0 +1,21 @@
+{
+    "name": "tombzombie/dice",
+    "description": "A minimalist Dependency injection container (DIC) for PHP. Please note: This branch is only compatible with PHP5.6. 5.5, 5.4 and 5.3 compatible version is available as a separate branch on github. ",
+    "license": "BSD-2-Clause",
+    "homepage": "http://r.je/dice.html",
+    "keywords": ["Dependency injection", "ioc", "Dependency injection container", "DI"],
+    "authors": [
+    	{
+    		"name": "Tom Butler",
+    		"email": "tom@r.je"
+    	}
+    ],
+    "require": {
+        "php": ">=5.6.0"
+    },
+    "autoload": {
+    	"psr-4": {
+            "Dice\\": "./"
+        }
+    }
+}

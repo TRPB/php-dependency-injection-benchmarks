@@ -1,0 +1,37 @@
+language: php
+
+php:
+  - 5.3
+  - 5.4
+  - 5.5
+  - 5.6
+  - hhvm
+  - hhvm-nightly
+
+matrix:
+  allow_failures:
+    - php: 5.3
+    - php: hhvm-nightly
+    
+before_script: 
+  - composer self-update
+  - composer install --prefer-source --no-interaction --dev
+  - mkdir -p build/logs
+  
+script:
+  - ./vendor/bin/phpunit -v -c phpunit.xml.dist --coverage-clover build/logs/clover.xml
+  
+after_script:
+  # coveralls.io
+  - if [[ "$TRAVIS_PHP_VERSION" != "hhvm" ]]; then php vendor/bin/coveralls -v; fi
+  # scrutinizer-ci
+  - if [[ "$TRAVIS_PHP_VERSION" != "hhvm" ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+  - if [[ "$TRAVIS_PHP_VERSION" != "hhvm" ]]; then php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml; fi
+
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/8325a02313797dd6c619
+    on_success: always  # options: [always|never|change] default: always
+    on_failure: always  # options: [always|never|change] default: always
+    on_start: false     # default: false

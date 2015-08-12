@@ -1,0 +1,11 @@
+services:
+    a: A
+    b: B(@a())
+    c: C(@b())
+    d: D(@c())
+    e: E(@d())
+    f: F(@e())
+    g: G(@f())
+    h: H(@g())
+    i: I(@h())
+    j: J(@i())
