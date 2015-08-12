@@ -79,6 +79,8 @@ for ($test = 1; $test <= $numTests; $test++) {
 	$html .= '<table>';
 	cliPrint('Starting test:' . $test);
 
+	$containerInfo = [];
+
 	$html .= '<thead><tr><th>Container</th><th>Time</th><th>Memory</th><th>Files</th></thead>';
 	
 	foreach ($containers as $container) {
@@ -90,7 +92,7 @@ for ($test = 1; $test <= $numTests; $test++) {
 		$output = [];
 		
 		for ($i = 0; $i < $runs; $i++) {
-			cliPrint($container . ' test' . $test . ' : ' . $i . '/' . $runs);
+			cliPrint($container . ' test' . $test . ' : ' . ($i+1) . '/' . $runs);
 			$output = runScript('./' . $container . '/test' . $test . '.php', $inis[$container]);
 			$result = json_decode($output[0]);
 			if (!is_object($result)) echo $container . $test . '<br />';
@@ -99,17 +101,28 @@ for ($test = 1; $test <= $numTests; $test++) {
 			$files[] = $result->files;
 		}
 		
-		//average memory and file count is pointless here, but it's included for completenesss
+		
+		$containerInfo[] = ['name' => $container, 'time' => average($time), 'memory' => average($memory), 'files' => average($files)];
+	}
+	
+	//Sort the results by time
+	usort($containerInfo, function($a, $b) {
+		if ($a['time'] == $b['time']) return ($a['memory'] < $b['memory']) ? -1 : 1; 
+
+		return ($a['time'] < $b['time']) ? -1 : 1; 
+	});
+
+	foreach ($containerInfo as $containerDetail) {
 		$html .= '<tr>';
-		$html .= '<td>' . $container .'</td>';
-		$html .= '<td>' . average($time) . '</td>';
-		$html .= '<td>' . average($memory) . '</td>';
-		$html .= '<td>' . (average($files)-2) . '</td>';
+		$html .= '<td>' . $containerDetail['name'] .'</td>';
+		$html .= '<td>' . $containerDetail['time'] . '</td>';
+		$html .= '<td>' . $containerDetail['memory'] . '</td>';
+		$html .= '<td>' . $containerDetail['files'] . '</td>';
 		$html .= '</tr>';
 		
 	}
-	
-	
+
+
 	$html .= '</table>';
 
 }
