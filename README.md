@@ -27,8 +27,8 @@ Containers currently tested are:
 or
 1b) Install via composer
 
-3) Run `php test1-5_runner.php` and `php test6_runner.php` (These will take some time!)
-4) Open the files `test1-5_results.html` and `test6_results.html`
+2) Run `php test1-5_runner.php` and `php test6_runner.php` (These will take some time!)
+3) Open the files `test1-5_results.html` and `test6_results.html`
 
 
 # Tests
