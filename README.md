@@ -35,7 +35,8 @@ or
 Test results are viewable here:
 
 [Tests 1 - 5](https://rawgit.com/TomBZombie/php-dependency-injection-benchmarks/master/test1-5_results.html)
-[Tests 6](https://rawgit.com/TomBZombie/php-dependency-injection-benchmarks/master/test1-6_results.html)
+
+[Tests 6](https://rawgit.com/TomBZombie/php-dependency-injection-benchmarks/master/test6_results.html)
 
 
 # Tests
