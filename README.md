@@ -30,6 +30,13 @@ or
 2) Run `php test1-5_runner.php` and `php test6_runner.php` (These will take some time!)
 3) Open the files `test1-5_results.html` and `test6_results.html`
 
+# Results
+
+Test results are viewable here:
+
+[Tests 1 - 5](https://rawgit.com/TomBZombie/php-dependency-injection-benchmarks/master/test1-5_results.html)
+[Tests 6](https://rawgit.com/TomBZombie/php-dependency-injection-benchmarks/master/test1-6_results.html)
+
 
 # Tests
 
