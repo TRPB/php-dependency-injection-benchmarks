@@ -2,10 +2,7 @@
 
 $container = new \Njasm\Container\Container();
 
-$container->set('A', function() {
-	return new A();
-});
-
+$container->bind('A', 'A');
 
 $t1 = microtime(true);
 

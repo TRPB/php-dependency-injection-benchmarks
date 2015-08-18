@@ -1,11 +1,7 @@
 <?php 
 $container = new \Njasm\Container\Container();
 
-// register a factory to instantiate the object everytime
-$container->set('B', function() use($container) {
-	return new B($container->get('A'));
-});
-
+$container->bindSingleton('A', 'A');
 
 //trigger autoloader
 $b = $container->get('B');
