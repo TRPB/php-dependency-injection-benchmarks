@@ -1,6 +1,8 @@
 <?php 
 $container = new \Njasm\Container\Container();
 
+$container->bindSingleton('A', 'A');
+
 //trigger autoloader
 $a = $container->get('A');
 unset($a);
