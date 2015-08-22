@@ -1,8 +1,8 @@
 <?php 
-
+$t1 = microtime(true);
 $dice = new \Dice\Dice;
 
-$t1 = microtime(true);
+
 
 for ($i = 0; $i < 10000; $i++) {
 	$a = $dice->create('A');

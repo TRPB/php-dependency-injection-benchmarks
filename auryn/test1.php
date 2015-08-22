@@ -1,7 +1,7 @@
 <?php 
+$t1 = microtime(true);
 $injector = new Auryn\Injector;
 
-$t1 = microtime(true);
 
 for ($i = 0; $i < 10000; $i++) {
 	$a = $injector->make('A');

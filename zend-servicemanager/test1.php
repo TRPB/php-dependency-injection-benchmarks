@@ -1,6 +1,6 @@
 <?php 
 
-
+$t1 = microtime(true);
 class ServiceConfiguration extends \Zend\ServiceManager\Config {
 	public function configureServiceManager(\Zend\ServiceManager\ServiceManager $serviceManager)	{
 		$serviceManager->setFactory('A', function() {
@@ -16,7 +16,7 @@ $serviceManager = new \Zend\ServiceManager\ServiceManager($config);
 
 
 
-$t1 = microtime(true);
+
 
 for ($i = 0; $i < 10000; $i++) {
 	$a = $serviceManager->get('A');

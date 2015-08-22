@@ -1,6 +1,6 @@
 <?php 
 
-
+$t1 = microtime(true);
 $file = __DIR__ . '/container_test1.php';
 
 if (file_exists($file)) {
@@ -23,7 +23,7 @@ if (file_exists($file)) {
 
 
 
-$t1 = microtime(true);
+
 
 for ($i = 0; $i < 10000; $i++) {
 	$a = $container->get('A');

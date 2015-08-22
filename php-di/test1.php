@@ -1,5 +1,5 @@
 <?php 
-
+$t1 = microtime(true);
 $builder = new \DI\ContainerBuilder();
 $builder->addDefinitions(__DIR__ . '/config.php');
 $builder->setDefinitionCache(new \Doctrine\Common\Cache\ArrayCache());
@@ -7,7 +7,7 @@ $builder->setDefinitionCache(new \Doctrine\Common\Cache\ArrayCache());
 $container = $builder->build();
 
 
-$t1 = microtime(true);
+
 
 for ($i = 0; $i < 10000; $i++) {
 	$a = $container->get('A');

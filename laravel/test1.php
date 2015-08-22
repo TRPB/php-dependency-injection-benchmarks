@@ -1,9 +1,9 @@
 <?php 
 
+$t1 = microtime(true);
 $container = new \Illuminate\Container\Container;
 
-		
-$t1 = microtime(true);
+
 
 for ($i = 0; $i < 10000; $i++) {
 	$a = $container->make('A');

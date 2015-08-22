@@ -1,11 +1,11 @@
 <?php 
-
+$t1 = microtime(true);
 $di = new Phalcon\DI();
 $di->set('A', function() {
 	return new A();
 });
 
-$t1 = microtime(true);
+
 
 for ($i = 0; $i < 10000; $i++) {
 	$a = $di->get('A');
