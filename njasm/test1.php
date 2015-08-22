@@ -1,10 +1,10 @@
 <?php
-
+$t1 = microtime(true);
 $container = new \Njasm\Container\Container();
 
 $container->bind('A', 'A');
 
-$t1 = microtime(true);
+
 
 for ($i = 0; $i < 10000; $i++) {
 	$a = $container->get('A');
