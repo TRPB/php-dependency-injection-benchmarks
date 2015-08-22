@@ -2,11 +2,7 @@
 
 $container = new \Njasm\Container\Container();
 
-// register a factory to instantiate the object everytime
-$container->set('A', function() {
-	return new A();
-});
-
+$container->bind('A', 'A');
 
 //trigger autoloader
 $a = $container->get('A');
