@@ -85,7 +85,7 @@ class J {
 class K {
 	public $j;
 	
-	public function __construct(K $k) {
-		$this->k = $k;
+	public function __construct(J $j) {
+		$this->j = $j;
 	}
 }
