@@ -26,6 +26,15 @@
         "symfony/config": "*",
         "symfony/proxy-manager-bridge": "*",
         "zendframework/zend-di": "*",
-        "zendframework/zend-servicemanager": "*"
-    }
+        "zendframework/zend-servicemanager": "*",
+        "dangerousdan/dimaria": "*",
+        "mindplay/unbox": "*",
+        "slince/di": "*",
+        "joomla/di": "*",
+        "yiisoft/yii2": "*",
+        "lucatume/di52": "*",
+        "pyrsmk/chernozem": "*"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

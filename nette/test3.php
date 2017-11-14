@@ -1,21 +1,19 @@
 <?php
 
-$configurator = new \Nette\Configurator();
-$configurator->setTempDirectory(__DIR__ . '/temp');
-$configurator->defaultExtensions = array();
-$configurator->addConfig(__DIR__ . '/config/services.neon');
-$container = $configurator->createContainer(); // compile
+$loader = new Nette\DI\ContainerLoader(__DIR__ . '/temp');
+$class = $loader->load(function($compiler) {
+    $compiler->loadConfig(__DIR__ . '/config/services.neon');
+});
+$container = new $class;
 
-
-//Trigger autoloader
-$j = $container->createServiceJ('j');
+$j = $container->createService('j');
 unset($j);
 
 
 $t1 = microtime(true);
 
 for ($i = 0; $i < 10000; $i++) {	
-	$j = $container->createServiceJ();
+	$j = $container->createService('j');
 }
 
 $t2 = microtime(true);

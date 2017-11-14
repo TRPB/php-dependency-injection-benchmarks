@@ -1,14 +1,14 @@
 <?php 
 
-use Aura\Di\Container;
-use Aura\Di\Factory;
-$di = new Container(new Factory());
+use Aura\Di\ContainerBuilder;
+$builder = new ContainerBuilder();
+$di = $builder->newInstance();
 
 
 $di->set('A', $di->lazyNew('A'));
+$di->params['B'] = ['a' => $di->lazyNew('A')];
 $di->set('B', $di->lazyNew('B'));
 
-$di->params['B'] = ['a' => $di->get('A')];
 
 //Trigger the autoloader before measuring execution time
 $a = $di->newinstance('B');

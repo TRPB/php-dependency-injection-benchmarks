@@ -1,19 +1,14 @@
 <?php
 
-require_once __DIR__ . '/vendor/autoload.php';
-require_once '../testclasses.php';
-
-
-
-$configurator = new \Nette\Configurator();
-$configurator->setTempDirectory(__DIR__ . '/temp');
-$configurator->defaultExtensions = array();
-$configurator->addConfig(__DIR__ . '/config/services.neon');
-$container = $configurator->createContainer(); // compile
+$loader = new Nette\DI\ContainerLoader(__DIR__ . '/temp');
+$class = $loader->load(function($compiler) {
+    $compiler->loadConfig(__DIR__ . '/config/services.neon');
+});
+$container = new $class;
 	
 
 for ($i = 0; $i < $argv[1]; $i++) {
-	$j = $container->createServiceJ();
+	$j = $container->createService('j');
 }
 
 $results = [

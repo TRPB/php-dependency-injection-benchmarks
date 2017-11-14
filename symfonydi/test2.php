@@ -1,6 +1,6 @@
 <?php 
 
-$file = __DIR__ . '/container_test1.php';
+$file = __DIR__ . '/container_test2.php';
 
 if (file_exists($file)) {
 	require_once $file;
@@ -11,7 +11,7 @@ if (file_exists($file)) {
 
 
 	$definition = new Symfony\Component\DependencyInjection\Definition('A', []);
-	$definition->setScope('prototype');
+	$definition->setShared(false);
 	$container->setDefinition('A', $definition);
 	$container->compile();
 

@@ -18,7 +18,7 @@ $container = new Symfony\Component\DependencyInjection\ContainerBuilder;
 		else $ref = [];
 		
 		$definition = new Symfony\Component\DependencyInjection\Definition($classes[$i], $ref );
-		$definition->setScope('prototype');
+		$definition->setShared(false);
 		$container->setDefinition($classes[$i], $definition);
 	}
 	

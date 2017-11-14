@@ -1,20 +1,19 @@
 <?php
 
 $container = new League\Container\Container;
-
-$container->singleton('A');
-
+// register the reflection container as a delegate to enable auto wiring
+$container->delegate(
+    new League\Container\ReflectionContainer
+);
+$container->share('A');
 //trigger all autoloaders
 $b = $container->get('B');
 unset($b);
 
 $t1 = microtime(true);
-
-
 for ($i = 0; $i < 10000; $i++) {
 	$a = $container->get('B');
 }
-
 $t2 = microtime(true);
 
 $results = [

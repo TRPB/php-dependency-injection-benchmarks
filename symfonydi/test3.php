@@ -1,6 +1,6 @@
 <?php 
 
-$file = __DIR__ . '/container_test6.php';
+$file = __DIR__ . '/container_test3.php';
 
 if (file_exists($file)) {
 	require_once $file;
@@ -16,7 +16,7 @@ if (file_exists($file)) {
 		else $ref = [];
 
 		$definition = new Symfony\Component\DependencyInjection\Definition($classes[$i], $ref );
-		$definition->setScope('prototype');
+		$definition->setShared(false);
 		$container->setDefinition($classes[$i], $definition);
 	}
 

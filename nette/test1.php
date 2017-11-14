@@ -2,7 +2,7 @@
 
 $t1 = microtime(true);
 $loader = new Nette\DI\ContainerLoader(__DIR__ . '/temp', TRUE);
-$class = $loader->load('', function($compiler) {
+$class = $loader->load(function($compiler) {
     $compiler->loadConfig(__DIR__ . '/config/services.neon');
 });
 $container = new $class;
@@ -12,7 +12,7 @@ $container = new $class;
 
 
 for ($i = 0; $i < 10000; $i++) {
-	$a = $container->createServiceA();
+	$a = $container->createService('a');
 }
 
 $t2 = microtime(true);

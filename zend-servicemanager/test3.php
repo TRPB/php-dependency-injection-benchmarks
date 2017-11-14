@@ -1,74 +1,30 @@
 <?php 
 
-class ServiceConfiguration extends \Zend\ServiceManager\Config {
-	public function configureServiceManager(\Zend\ServiceManager\ServiceManager $serviceManager)	{
-		$serviceManager->setFactory('A', function() {
-				return new A;
-		});
-		$serviceManager->setShared('A', false);
-		
-		
-		$serviceManager->setFactory('B', function($serviceManager) {
-			return new B($serviceManager->get('A'));
-		});
-		$serviceManager->setShared('B', false);
-	
-		$serviceManager->setFactory('C', function($serviceManager) {
-			return new C($serviceManager->get('B'));
-		});
-			
-		$serviceManager->setShared('C', false);
-			
-		$serviceManager->setFactory('D', function($serviceManager) {
-			return new D($serviceManager->get('C'));
-		});
-	
-		$serviceManager->setShared('D', false);
-		
-		$serviceManager->setFactory('E', function($serviceManager) {
-			return new E($serviceManager->get('D'));
-		});
-		
-		$serviceManager->setShared('E', false);
-	
-		$serviceManager->setFactory('F', function($serviceManager) {
-			return new F($serviceManager->get('E'));
-		});
-		
-		$serviceManager->setShared('F', false);
-		
-		$serviceManager->setFactory('G', function($serviceManager) {
-			return new G($serviceManager->get('F'));
-		});
-		
-		$serviceManager->setShared('G', false);
-		
-		$serviceManager->setFactory('H', function($serviceManager) {
-			return new H($serviceManager->get('G'));
-		});
-		
-		$serviceManager->setShared('H', false);
-		
-		$serviceManager->setFactory('I', function($serviceManager) {
-			return new I($serviceManager->get('H'));
-		});
-		
-		$serviceManager->setShared('I', false);
-		
-		$serviceManager->setFactory('J', function($serviceManager) {
-			return new J($serviceManager->get('I'));
-		});
-		
-		$serviceManager->setShared('J', false);
-				
-			
-	}
-}
-
-
-$config = new ServiceConfiguration();
-$serviceManager = new \Zend\ServiceManager\ServiceManager($config);
-
+use Zend\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory;
+$serviceManager = new \Zend\ServiceManager\ServiceManager([
+    'factories' => [
+        'A' => ReflectionBasedAbstractFactory::class,
+        'B' => ReflectionBasedAbstractFactory::class,
+        'C' => ReflectionBasedAbstractFactory::class,
+        'D' => ReflectionBasedAbstractFactory::class,
+        'E' => ReflectionBasedAbstractFactory::class,
+        'F' => ReflectionBasedAbstractFactory::class,
+        'G' => ReflectionBasedAbstractFactory::class,
+        'H' => ReflectionBasedAbstractFactory::class,
+        'I' => ReflectionBasedAbstractFactory::class,
+        'J' => ReflectionBasedAbstractFactory::class,
+    ],
+]);
+$serviceManager->setShared('A', false);
+$serviceManager->setShared('B', false);
+$serviceManager->setShared('C', false);
+$serviceManager->setShared('D', false);
+$serviceManager->setShared('E', false);
+$serviceManager->setShared('F', false);
+$serviceManager->setShared('G', false);
+$serviceManager->setShared('H', false);
+$serviceManager->setShared('I', false);
+$serviceManager->setShared('J', false);
 
 //trigger autoloaders
 $j = $serviceManager->get('J');
