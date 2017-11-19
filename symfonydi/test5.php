@@ -9,10 +9,11 @@ if (file_exists($file)) {
 	$container = new Symfony\Component\DependencyInjection\ContainerBuilder;
 
 
-	$container->register('A', 'A');
+	$definition = new Symfony\Component\DependencyInjection\Definition('A', []);
+	$container->setDefinition('A', $definition);
 	$ref = [new Symfony\Component\DependencyInjection\Reference('A')];
 	$definition = new Symfony\Component\DependencyInjection\Definition('B', $ref );
-	$definition->setScope('prototype');
+	$definition->setShared(false);
 	$container->setDefinition('B', $definition);
 
 

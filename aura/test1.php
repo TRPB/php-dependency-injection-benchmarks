@@ -2,9 +2,9 @@
 
 
 $t1 = microtime(true);
-use Aura\Di\Container;
-use Aura\Di\Factory;
-$di = new Container(new Factory());
+use Aura\Di\ContainerBuilder;
+$builder = new ContainerBuilder();
+$di = $builder->newInstance();
 $di->set('A', $di->lazyNew('A'));
 
 for ($i = 0; $i < 10000; $i++) {

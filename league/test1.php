@@ -1,14 +1,11 @@
 <?php 
 $t1 = microtime(true);
 
-
 $container = new League\Container\Container;
-
-
+$container->share('A');
 for ($i = 0; $i < 10000; $i++) {
 	$a = $container->get('A');
 }
-
 $t2 = microtime(true);
 
 $results = [

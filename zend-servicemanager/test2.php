@@ -1,18 +1,12 @@
 <?php 
 
-class ServiceConfiguration extends \Zend\ServiceManager\Config {
-	public function configureServiceManager(\Zend\ServiceManager\ServiceManager $serviceManager)	{
-		$serviceManager->setFactory('A', function() {
-				return new A;
-		});
-		$serviceManager->setShared('A', false);
-	}
-}
-
-
-$config = new ServiceConfiguration();
-$serviceManager = new \Zend\ServiceManager\ServiceManager($config);
-
+use Zend\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory;
+$serviceManager = new \Zend\ServiceManager\ServiceManager([
+    'factories' => [
+        'A' => ReflectionBasedAbstractFactory::class,
+    ],
+]);
+$serviceManager->setShared('A', false);
 
 //trigger autoloaders
 $a = $serviceManager->get('A');

@@ -1,4 +1,5 @@
 <?php
+$ta1 = microtime(true);
 //You shouldn't have max_exectution_time set high enough to run these benchmarks 
 ini_set('max_execution_time', 90000);
 opcache_reset();
@@ -25,9 +26,8 @@ $runs = 10;
 //use 100 or more for a more accurate result
 $iterations = 250;
 
-
 //Containers to be tested (dir names)
-$containers = ['pimple', 'phalcon', 'dice', 'symfonydi'];
+$containers = ['aura', 'auryn', 'chernozem', 'di52', 'dice', 'DiMaria', 'joomla-di', 'laravel', 'league', 'nette', 'njasm', 'phalcon', 'php-di', 'pimple', 'slince-di', 'symfonydi', 'unbox', 'yii2-di', 'zend-di', 'zend-servicemanager'];
 
 //Default ini file to use for tests
 $defaultIni = getcwd() . DIRECTORY_SEPARATOR . 'php.ini';
@@ -137,6 +137,7 @@ foreach ($containers as $container) {
 	$html .= '</tr>';
 	
 }
-
+$ta2 = microtime(true);
+echo $ta2 - $ta1;
 if (!$isCli) echo $html;
 else file_put_contents('test6_results.html', $html);

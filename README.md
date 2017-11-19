@@ -1,21 +1,27 @@
 # DI Container Benchmarks
 
 Containers currently tested are:
-- Aura
-- Auryn
-- Dice
-- Laravel
-- Leage
-- Njasm
-- Phalcon
-- PHP-DI
-- Pimple
-- Symfony DI
-- Zend\Di
-- Zend\Servicemanager
+- [Aura.Di](ttps://github.com/auraphp/Aura.Di)
+- [Auryn](https://github.com/rdlowrey/auryn)
+- [Chernozem](https://github.com/pyrsmk/Chernozem)
+- [Di52](https://github.com/lucatume/di52)
+- [Dice](http://r.je/dice.html)
+- [DiMaria](https://github.com/dangerousdan/dimaria)
+- [Joomla DI](https://github.com/joomla-framework/di)
+- [Laravel](https://github.com/illuminate/container)
+- [Leage](https://github.com/thephpleague/container)
+- [Nette](https://github.com/nette/di)
+- [Njasm](https://github.com/njasm/container)
+- [Phalcon](https://docs.phalconphp.com/en/3.2/di)
+- [PHP-DI](http://php-di.org/)
+- [Pimple](http://pimple.sensiolabs.org)
+- [Slince DI](https://github.com/slince/di)
+- [Symfony DI](https://github.com/symfony/dependency-injection)
+- [Unbox](https://github.com/mindplay-dk/unbox)
+- [Yii2-di](http://www.yiiframework.com/doc-2.0/guide-concept-di-container.html)
+- [Zend\Di](https://github.com/zendframework/zend-di)
+- [Zend\Servicemanager](https://github.com/zendframework/zend-servicemanager)
 
-
-**Nette is currently disabled due to not working as advertised. It fails to load Nette\DI\ContainerLoader which prevents any tests being done**
 
 **Ray.Di does not seem to work without annotations. Requiring the classes to be coupled to the container goes against the spirit of DI and as such is not tested here** 
 

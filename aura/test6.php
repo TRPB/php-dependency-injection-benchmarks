@@ -1,8 +1,8 @@
 <?php 
 
-use Aura\Di\Container;
-use Aura\Di\Factory;
-$di = new Container(new Factory());
+use Aura\Di\ContainerBuilder;
+$builder = new ContainerBuilder();
+$di = $builder->newInstance();
 
 
 $di->params['J'] = ['i' => $di->lazyNew('I')];

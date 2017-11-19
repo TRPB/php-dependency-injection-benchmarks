@@ -21,7 +21,7 @@ $runs = 10;
 cliPrint('Running each test ' . $runs . ' times');
 
 //Containers to be tested (dir names)
-$containers =  ['aura', 'auryn', 'dice', 'laravel', 'league', 'njasm', 'phalcon', 'php-di', 'pimple', 'symfonydi', 'zend-di', 'zend-servicemanager'];
+$containers =  ['aura', 'auryn', 'chernozem', 'di52', 'dice', 'DiMaria', 'joomla-di', 'laravel', 'league', 'nette', 'njasm', 'phalcon', 'php-di', 'pimple', 'slince-di', 'symfonydi', 'unbox', 'yii2-di', 'zend-di', 'zend-servicemanager'];
 
 
 //Default ini file to use for tests
